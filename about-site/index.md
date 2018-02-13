@@ -3,10 +3,11 @@ title: 本站特性
 date: 2016-12-11 13:12:10
 ---
 
-本站启用了更加安全的 HTTPS 协议，以 Nginx 作为主站的 Web Server。本站的 [博客](https://www.fanhaobai.com) 基于开源的 Hexo 搭建，运行于 NodeJS 环境；本站的 [维基](https://wiki.fanhaobai.com) 运行于 PHP 环境；数据库采用开源的 MySQL ，内存缓存服务器采用 Redis 。
+本站启用了更加安全的 HTTPS 协议，以 Nginx 作为主站的 Web Server。本站的 [博客](https://www.fanhaobai.com) 基于开源的 Hexo 搭建，运行于 NodeJS 环境，本站的 [维基](https://wiki.fanhaobai.com) 运行于 PHP 环境，数据库采用开源的 MySQL ，内存缓存服务器采用 Redis 。
 
 # 更新说明
 
+* 2018.02.12：兼容迁移 Hexo 之前的文章 [url](#主站——www-conf)。
 * 2018.01.06：接入 [Cloudflare](https://www.cloudflare.com) 提供的免费 CDN。
 * 2017.12.16：搭建 [ELK](https://www.fanhaobai.com/2017/12/elk.html) 集中式日志平台。
 * 2017.12.09：Hexo 结合 [Webhook](https://github.com/fan-haobai/webhook) 支持自动发布。
@@ -188,6 +189,34 @@ server {
     #重定向到https
     return    301  https://www.fanhaobai.com$request_uri;
 }
+```
+
+为了兼容迁移 Hexo 之前文章的 url，增加以下重写规则：
+
+```Nginx
+rewrite ^/2017/08/solr-insatll(.*) /2017/08/solr-install$1 permanent;
+rewrite ^/2017/11/elk(.*) /2017/12/elk$1 permanent;
+rewrite ^/post/upgrade-gcc-4.8(.*) /2016/12/upgrade-gcc$1 permanent;
+rewrite ^/post/linux-version(.*) /2016/07/linux-version$1 permanent;
+rewrite ^/post/nodejs-install(.*) /2016/12/nodejs-install$1 permanent;
+rewrite ^/post/docker-install(.*) /2017/01/docker-install$1 permanent;
+rewrite ^/post/firekylin(.*) /2016/12/firekylin$1 permanent;
+rewrite ^/post/mongo-docker-install(.*) /2017/01/mongo-docker-install$1 permanent;
+rewrite ^/post/iptables(.*) /2017/02/iptables$1 permanent;
+rewrite ^/post/ajax-cookie(.*) /2016/12/ajax-cookie$1 permanent;
+rewrite ^/post/recover-file(.*) /2016/05/recover-file$1 permanent;
+rewrite ^/post/redis-install(.*) /2016/08/redis-install$1 permanent;
+rewrite ^/post/robots(.*) /2017/01/robots$1 permanent;
+rewrite ^/post/update-sitemap(.*) /2017/01/update-sitemap$1 permanent;
+rewrite ^/post/ssh-safely-use(.*) /2016/08/ssh-safely-use$1 permanent;
+rewrite ^/post/nginx-error-log(.*) /2017/01/nginx-error-log$1 permanent;
+rewrite ^/post/win10-vm-network(.*) /2016/02/win10-vm-network$1 permanent;
+rewrite ^/post/lock-ip(.*) /2017/02/lock-ip$1 permanent;
+rewrite ^/post/reward(.*) /2017/02/reward$1 permanent;
+rewrite ^/post/letsencrypt(.*) /2016/12/lets-encrypt$1 permanent;
+rewrite ^/post/linux-tool-website(.*) /2017/02/linux-tool-website$1 permanent;
+rewrite ^/rss.html /atom.xml last;
+rewrite ^/map.html /sitemap.xml last;
 ```
 
 ### 维基——wiki.conf
